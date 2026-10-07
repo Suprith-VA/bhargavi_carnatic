@@ -1,13 +1,16 @@
 'use client';
-import { useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Upload } from 'lucide-react';
+import { Upload, Lock, LogOut, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 
 export default function AdminPage() {
   const [password, setPassword] = useState('');
   const [authenticated, setAuthenticated] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
+  const [loggingIn, setLoggingIn] = useState(false);
   const [authError, setAuthError] = useState('');
+
   const [files, setFiles] = useState([]);
   const [previews, setPreviews] = useState([]);
   const [uploading, setUploading] = useState(false);
@@ -16,15 +19,73 @@ export default function AdminPage() {
   const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef(null);
 
-  const handleLogin = (e) => {
+  // Check if already authenticated on initial page load
+  useEffect(() => {
+    async function checkExistingSession() {
+      try {
+        const res = await fetch('/api/admin/check', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.authenticated) {
+            setAuthenticated(true);
+          }
+        }
+      } catch (err) {
+        console.error('Error checking auth:', err);
+      } finally {
+        setCheckingAuth(false);
+      }
+    }
+    checkExistingSession();
+  }, []);
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Password is validated server-side; for UX we do a quick check by trying a small request
-    if (!password.trim()) {
-      setAuthError('Please enter a password.');
+    const trimmed = password.trim();
+    if (!trimmed) {
+      setAuthError('Please enter the admin password.');
       return;
     }
-    setAuthenticated(true);
+
+    setLoggingIn(true);
     setAuthError('');
+
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: trimmed }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok && data.success) {
+        setAuthenticated(true);
+        setAuthError('');
+      } else {
+        setAuthenticated(false);
+        setAuthError(data.error || '❌ Incorrect password. Access denied.');
+      }
+    } catch {
+      setAuthError('❌ Network error. Please check your connection and try again.');
+    } finally {
+      setLoggingIn(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/admin/logout', { method: 'POST' });
+    } catch (err) {
+      console.error('Logout error:', err);
+    } finally {
+      setAuthenticated(false);
+      setPassword('');
+      setFiles([]);
+      setPreviews([]);
+      setStatusMsg('');
+      setAuthError('');
+    }
   };
 
   const handleFiles = (fileList) => {
@@ -48,7 +109,7 @@ export default function AdminPage() {
       return;
     }
     setUploading(true);
-    setStatusMsg('Uploading...');
+    setStatusMsg('Uploading photos...');
     setStatusType('');
 
     let successCount = 0;
@@ -60,16 +121,18 @@ export default function AdminPage() {
       try {
         const res = await fetch('/api/upload', {
           method: 'POST',
-          headers: { 'x-admin-password': password },
+          headers: password ? { 'x-admin-password': password } : {},
           body: formData,
         });
+
         if (res.ok) {
           successCount++;
         } else {
-          const err = await res.json();
-          if (err.error === 'Unauthorized') {
-            setStatusMsg('❌ Wrong password. Please refresh and try again.');
+          const err = await res.json().catch(() => ({}));
+          if (res.status === 401 || err.error?.includes('Unauthorized')) {
+            setStatusMsg('❌ Session expired or unauthorized. Please log in again.');
             setStatusType('error');
+            setAuthenticated(false);
             setUploading(false);
             return;
           }
@@ -90,10 +153,21 @@ export default function AdminPage() {
       setStatusMsg(`⚠️ ${successCount} uploaded, ${failCount} failed.`);
       setStatusType('success');
     } else {
-      setStatusMsg('❌ Upload failed. Please check your connection and try again.');
+      setStatusMsg('❌ Upload failed. Please check your connection or credentials and try again.');
       setStatusType('error');
     }
   };
+
+  if (checkingAuth) {
+    return (
+      <div className="admin-page" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center', color: 'var(--color-text-muted)' }}>
+          <Loader2 className="animate-spin" size={32} style={{ margin: '0 auto 1rem', color: 'var(--color-amber)' }} />
+          <p>Verifying admin session...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!authenticated) {
     return (
@@ -101,27 +175,65 @@ export default function AdminPage() {
         <div className="admin-card" style={{ maxWidth: 420 }}>
           <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
             <Image src="/logo.png" alt="Bhargavi Carnatic Music" width={64} height={64} style={{ margin: '0 auto 1rem' }} />
-            <h1 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>Admin Access</h1>
-            <p>Enter your password to upload photos to the gallery.</p>
+            <h1 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+              <Lock size={20} style={{ color: 'var(--color-amber)' }} /> Admin Access
+            </h1>
+            <p style={{ fontSize: '0.88rem', color: 'var(--color-text-light)' }}>
+              Enter your admin password to upload photos to the gallery.
+            </p>
           </div>
+
           <form onSubmit={handleLogin}>
             <input
               type="password"
               className="form-input"
               placeholder="Enter admin password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                if (authError) setAuthError('');
+              }}
               id="admin-password-input"
               aria-label="Admin password"
+              autoFocus
+              disabled={loggingIn}
               required
             />
+
             {authError && (
-              <div className="upload-status error" style={{ marginBottom: '1rem' }}>{authError}</div>
+              <div
+                className="upload-status error"
+                style={{
+                  marginBottom: '1rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.5rem',
+                  fontSize: '0.85rem',
+                }}
+              >
+                <AlertCircle size={16} />
+                <span>{authError}</span>
+              </div>
             )}
-            <button type="submit" className="btn btn-primary" id="admin-login-btn" style={{ width: '100%', justifyContent: 'center' }}>
-              Login →
+
+            <button
+              type="submit"
+              className="btn btn-primary"
+              id="admin-login-btn"
+              disabled={loggingIn}
+              style={{ width: '100%', justifyContent: 'center', gap: '0.5rem' }}
+            >
+              {loggingIn ? (
+                <>
+                  <Loader2 size={16} className="animate-spin" /> Verifying...
+                </>
+              ) : (
+                'Unlock & Enter →'
+              )}
             </button>
           </form>
+
           <p style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.82rem', color: 'var(--color-text-light)' }}>
             <Link href="/">← Back to Website</Link>
           </p>
@@ -133,12 +245,34 @@ export default function AdminPage() {
   return (
     <div className="admin-page">
       <div className="admin-card">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem' }}>
-          <Image src="/logo.png" alt="Admin" width={48} height={48} />
-          <div>
-            <h1 style={{ fontSize: '1.6rem', marginBottom: '0.2rem' }}>Upload Photos</h1>
-            <p style={{ fontSize: '0.85rem', color: 'var(--color-text-light)' }}>Photos will appear immediately on the live gallery.</p>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <Image src="/logo.png" alt="Admin" width={48} height={48} />
+            <div>
+              <h1 style={{ fontSize: '1.5rem', marginBottom: '0.2rem' }}>Upload Photos</h1>
+              <p style={{ fontSize: '0.82rem', color: 'var(--color-text-light)' }}>Photos will appear immediately on the live gallery.</p>
+            </div>
           </div>
+
+          <button
+            onClick={handleLogout}
+            className="btn"
+            style={{
+              padding: '0.5rem 1rem',
+              fontSize: '0.85rem',
+              background: '#fef2f2',
+              color: '#991b1b',
+              border: '1px solid #fecaca',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              cursor: 'pointer',
+              borderRadius: '0.5rem',
+            }}
+            title="Log out of admin session"
+          >
+            <LogOut size={14} /> Log Out
+          </button>
         </div>
 
         <div
@@ -182,7 +316,10 @@ export default function AdminPage() {
         )}
 
         {statusMsg && (
-          <div className={`upload-status ${statusType}`}>{statusMsg}</div>
+          <div className={`upload-status ${statusType}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+            {statusType === 'success' ? <CheckCircle2 size={16} /> : statusType === 'error' ? <AlertCircle size={16} /> : null}
+            <span>{statusMsg}</span>
+          </div>
         )}
 
         <button
@@ -190,10 +327,16 @@ export default function AdminPage() {
           onClick={handleUpload}
           disabled={uploading || files.length === 0}
           id="admin-upload-btn"
-          style={{ width: '100%', justifyContent: 'center', opacity: files.length === 0 ? 0.5 : 1 }}
+          style={{ width: '100%', justifyContent: 'center', opacity: files.length === 0 ? 0.5 : 1, gap: '0.5rem' }}
           aria-label={uploading ? 'Uploading photos' : 'Upload selected photos'}
         >
-          {uploading ? '⏳ Uploading...' : `📤 Upload ${files.length > 0 ? `${files.length} Photo${files.length > 1 ? 's' : ''}` : 'Photos'}`}
+          {uploading ? (
+            <>
+              <Loader2 size={16} className="animate-spin" /> Uploading...
+            </>
+          ) : (
+            `📤 Upload ${files.length > 0 ? `${files.length} Photo${files.length > 1 ? 's' : ''}` : 'Photos'}`
+          )}
         </button>
 
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1.5rem', fontSize: '0.85rem' }}>

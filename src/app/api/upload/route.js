@@ -1,4 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary';
+import { isAuthorized } from '@/lib/auth';
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -8,10 +9,12 @@ cloudinary.config({
 
 export async function POST(request) {
   try {
-    // Validate admin password
-    const authHeader = request.headers.get('x-admin-password');
-    if (authHeader !== process.env.ADMIN_PASSWORD) {
-      return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    // Strictly validate admin authentication (via secure session cookie or verified header)
+    if (!isAuthorized(request)) {
+      return Response.json(
+        { error: 'Unauthorized. Invalid or missing admin credentials.' },
+        { status: 401 }
+      );
     }
 
     const formData = await request.formData();
