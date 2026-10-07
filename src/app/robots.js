@@ -1,10 +1,11 @@
 export default function robots() {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://bhargavi-carnatic.vercel.app';
   return {
     rules: {
       userAgent: '*',
       allow: '/',
       disallow: ['/admin', '/api/'],
     },
-    sitemap: 'https://www.bhargavicarnatic.com/sitemap.xml',
+    sitemap: `${baseUrl}/sitemap.xml`,
   };
 }

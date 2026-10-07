@@ -2,8 +2,10 @@ import Script from 'next/script';
 import './globals.css';
 import MobileFloatingButtons from '@/components/MobileFloatingButtons';
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://bhargavi-carnatic.vercel.app';
+
 export const metadata = {
-  metadataBase: new URL('https://www.bhargavicarnatic.com'),
+  metadataBase: new URL(siteUrl),
   title: 'Carnatic Music Classes by Bhargavi Bhadri | Bengaluru & Online',
   description:
     'Learn Carnatic music, devotional songs, Bhavageethe, folk songs & prayer songs with expert teacher Bhargavi Bhadri. Online & offline classes in Bengaluru (Krishnarajapuram). Students from USA, Dubai, Australia, Europe. 4,000+ students trained since 2016.',
@@ -33,7 +35,7 @@ export const metadata = {
     title: 'Carnatic Music Classes by Bhargavi Bhadri | Bengaluru & Online',
     description:
       'Expert Carnatic vocal training since 2016. Online & offline classes, group sessions & one-on-one lessons. 4,000+ students trained worldwide.',
-    url: 'https://www.bhargavicarnatic.com',
+    url: siteUrl,
     siteName: 'Carnatic Music Classes by Bhargavi Bhadri',
     locale: 'en_IN',
     type: 'website',
@@ -74,7 +76,7 @@ export const metadata = {
     },
   },
   alternates: {
-    canonical: 'https://www.bhargavicarnatic.com',
+    canonical: siteUrl,
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GSC_VERIFICATION || 'fK8h8Y_your_verification_code_placeholder',
@@ -100,9 +102,9 @@ export default function RootLayout({ children }) {
               name: 'Carnatic Music Classes by Bhargavi Bhadri',
               description:
                 'Carnatic music vocal training, devotional songs, Bhavageethe, folk songs, and prayer songs. Online and offline classes in Bengaluru and globally.',
-              url: 'https://www.bhargavicarnatic.com',
-              logo: 'https://www.bhargavicarnatic.com/logo.png',
-              image: 'https://www.bhargavicarnatic.com/og-image.jpg',
+              url: siteUrl,
+              logo: `${siteUrl}/logo.png`,
+              image: `${siteUrl}/og-image.jpg`,
               telephone: '+919731891537',
               email: 'bhargavianand1974@gmail.com',
               foundingDate: '2016-04-11',
