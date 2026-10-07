@@ -2,6 +2,7 @@
 import { useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Upload } from 'lucide-react';
 
 export default function AdminPage() {
   const [password, setPassword] = useState('');
@@ -148,11 +149,13 @@ export default function AdminPage() {
           onDrop={handleDrop}
           role="button"
           tabIndex={0}
-          aria-label="Upload photos — click or drag and drop"
+          aria-label="Upload photos, click or drag and drop"
           id="upload-dropzone"
           onKeyDown={(e) => e.key === 'Enter' && fileInputRef.current?.click()}
         >
-          <div className="upload-zone-icon">📸</div>
+          <div className="upload-zone-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '0.5rem', color: 'var(--color-amber)' }}>
+            <Upload size={36} />
+          </div>
           <h3>Click to Select Photos</h3>
           <p>or drag & drop images here</p>
           <p style={{ fontSize: '0.75rem', marginTop: '0.5rem', color: 'var(--color-text-light)' }}>JPG, PNG, WEBP supported · Multiple files allowed</p>

@@ -2,6 +2,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Phone } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
@@ -9,7 +10,7 @@ import Footer from '@/components/Footer';
 const staticImages = Array.from({ length: 23 }, (_, i) => ({
   id: `local-${i + 1}`,
   src: `/gallery/gallery-${i + 1}.png`,
-  alt: `Carnatic music class photo ${i + 1} — Bhargavi Bhadri`,
+  alt: `Carnatic music class photo ${i + 1}, Bhargavi Bhadri`,
   isLocal: true,
 }));
 
@@ -27,7 +28,7 @@ export default function GalleryPage() {
           setCloudinaryImages(data.images);
         }
       })
-      .catch(() => {}); // silently fail — static images always show
+      .catch(() => {}); // silently fail - static images always show
   }, []);
 
   const allImages = [...cloudinaryImages, ...staticImages];
@@ -137,10 +138,11 @@ export default function GalleryPage() {
             Be Part of Our Musical Family
           </h2>
           <p style={{ color: 'rgba(255,255,255,0.85)', marginBottom: '2rem', maxWidth: '500px', margin: '0 auto 2rem' }}>
-            Join our growing community of music lovers — enroll today and start your Carnatic journey.
+            Join our growing community of music lovers, enroll today and start your Carnatic journey.
           </p>
-          <a href="tel:+919731891537" className="btn" style={{ background: 'var(--color-white)', color: 'var(--color-amber-dark)' }} id="gallery-cta-call-btn">
-            📞 Call to Enroll
+          <a href="tel:+919731891537" className="btn" style={{ background: 'var(--color-white)', color: 'var(--color-amber-dark)', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }} id="gallery-cta-call-btn">
+            <Phone size={16} />
+            <span>Call to Enroll</span>
           </a>
         </section>
       </main>

@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { Phone, Mail } from 'lucide-react';
+import { FacebookIcon } from '@/components/Icons';
 
 export default function Footer() {
   return (
@@ -17,9 +19,20 @@ export default function Footer() {
             <p>
               Providing authentic Carnatic vocal music training since April 2016. Empowering students of all ages across India and the globe to connect with the timeless art of Indian classical music.
             </p>
-            <a href="tel:+919731891537" className="footer-phone" aria-label="Call Bhargavi Bhadri">
-              📞 +91 97318 91537
-            </a>
+            <div className="footer-contact-links" style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginTop: '1rem' }}>
+              <a href="tel:+919731891537" className="footer-phone" aria-label="Call Bhargavi Bhadri" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                <Phone size={15} />
+                <span>+91 97318 91537</span>
+              </a>
+              <a href="mailto:bhargavianand1974@gmail.com" style={{ color: 'var(--color-text-light)', fontSize: '0.88rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }} aria-label="Email Bhargavi Bhadri">
+                <Mail size={15} />
+                <span>bhargavianand1974@gmail.com</span>
+              </a>
+              <a href="https://www.facebook.com/profile.php?id=61578842536998" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-amber-light)', fontSize: '0.88rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }} aria-label="Bhargavi Bhadri on Facebook">
+                <FacebookIcon size={16} color="#1877F2" />
+                <span>Follow on Facebook ↗</span>
+              </a>
+            </div>
           </div>
 
           <div className="footer-col">
