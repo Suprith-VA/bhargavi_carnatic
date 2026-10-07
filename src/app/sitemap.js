@@ -1,5 +1,5 @@
 export default function sitemap() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://bhargavi-carnatic.vercel.app';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://bhargavicarnatic.vercel.app';
   return [
     {
       url: baseUrl,

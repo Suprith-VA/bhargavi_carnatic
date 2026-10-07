@@ -2,7 +2,7 @@ import Script from 'next/script';
 import './globals.css';
 import MobileFloatingButtons from '@/components/MobileFloatingButtons';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://bhargavi-carnatic.vercel.app';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://bhargavicarnatic.vercel.app';
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
@@ -79,7 +79,7 @@ export const metadata = {
     canonical: siteUrl,
   },
   verification: {
-    google: process.env.NEXT_PUBLIC_GSC_VERIFICATION || 'fK8h8Y_your_verification_code_placeholder',
+    google: process.env.NEXT_PUBLIC_GSC_VERIFICATION || 'j-Tuh78czQHa6bh7i0fmCSh1JcH0s3x4SsTO66QI5w8',
   },
 };
 
