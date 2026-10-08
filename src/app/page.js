@@ -531,6 +531,7 @@ export default function HomePage() {
                     src={`/gallery/gallery-${n}.png`}
                     alt={`Carnatic music class photo ${n}`}
                     fill
+                    sizes="(max-width: 768px) 50vw, 25vw"
                     style={{ objectFit: 'cover' }}
                   />
                 </div>
