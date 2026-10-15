@@ -2,7 +2,27 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import FAQ from '@/components/FAQ';
+import JsonLd from '@/components/JsonLd';
+import EnquiryForm from '@/components/EnquiryForm';
 import { FacebookIcon, WhatsAppIcon, NamaskaraIcon } from '@/components/Icons';
+import { websiteSchema, teacherSchema } from '@/lib/schema';
+import { galleryImage } from '@/lib/gallery';
+import {
+  pageMetadata,
+  PHONE,
+  PHONE_DISPLAY,
+  EMAIL,
+  FACEBOOK_URL,
+  ADDRESS_LINES,
+  HOURS,
+  SERVICE_AREAS,
+  YEARS_TEACHING,
+  MAP_EMBED_URL,
+  DIRECTIONS_URL,
+  GOOGLE_REVIEWS_URL,
+  whatsappLink,
+} from '@/lib/site';
 import {
   Sprout,
   Music,
@@ -23,13 +43,59 @@ import {
   Mail,
   MapPin,
   ArrowRight,
+  Clock,
 } from 'lucide-react';
 
+export const metadata = pageMetadata({
+  title: 'Carnatic Music Classes in Bengaluru & Online | Bhargavi Bhadri',
+  description:
+    'Carnatic vocal classes for kids & adults with Bhargavi Bhadri. In-person batches near Hoodi, KR Puram & Whitefield, Bengaluru, plus live online classes for the USA, UAE, Australia & Europe. 4,000+ students since 2016.',
+  path: '/',
+  absoluteTitle: true,
+});
+
+const HOME_FAQS = [
+  {
+    q: 'What age can my child start learning Carnatic music?',
+    a: 'Many children start around 5 or 6 years old, once they can sit through a short class and repeat a simple tune. Older children, teenagers and adults can start at any age. Send the student\'s age on WhatsApp and Bhargavi will suggest the right batch.',
+  },
+  {
+    q: 'Where are the in-person classes held?',
+    a: `In-person classes are held at Mukunda Nandanam, Kodigehalli Main Road, Ayyappa Nagar, Krishnarajapuram (KR Puram), Bengaluru 560067, close to Hoodi, Medahalli and Whitefield. Classes run ${HOURS.days}, 3:00 PM to 8:30 PM.`,
+  },
+  {
+    q: 'Do you offer online Carnatic music classes for students outside India?',
+    a: 'Yes. Students from the USA, Dubai/UAE, Australia, Singapore, Canada and Europe learn live over video call. Class timings are fixed to suit your time zone.',
+  },
+  {
+    q: 'Can adults join Carnatic music classes?',
+    a: 'Yes. Adult beginners and adults returning to music after a break are welcome, in group batches or one-on-one sessions.',
+  },
+  {
+    q: 'Are classes group or one-on-one?',
+    a: 'Both are available. Group sessions build confidence and rhythm through singing together, while one-on-one classes give full attention to the student\'s voice, pace and goals.',
+  },
+  {
+    q: 'What does a beginner learn first?',
+    a: 'Beginners start with the traditional Carnatic foundation: Sarali Varisai, Janti Varisai, Dhatu Varisai and upper-octave (Hechchu Sthayi) exercises, then Alankaras in the seven talas, followed by Geethams and Swarajathis.',
+  },
+  {
+    q: 'Do you prepare students for music exams?',
+    a: 'Yes. Students are prepared for junior and senior grade Carnatic music examinations, including Pracheen Kala Kendra exams, with both theory and practical coaching.',
+  },
+  {
+    q: 'What are the class fees?',
+    a: 'Fees depend on the format (group or one-on-one, in-person or online). Message on WhatsApp or call for the current fees and available batch timings.',
+  },
+];
+
 export default function HomePage() {
-  const galleryPreview = [1, 2, 3, 4];
+  const galleryPreview = [5, 16, 1, 23].map(galleryImage);
 
   return (
     <>
+      <JsonLd data={websiteSchema()} />
+      <JsonLd data={teacherSchema()} />
       <Navbar />
       <main>
         {/* ===== HERO ===== */}
@@ -38,38 +104,43 @@ export default function HomePage() {
             <div className="hero-content">
               <div className="hero-eyebrow">
                 <div className="hero-eyebrow-line" />
-                <span>Est. April 2016 · Bengaluru</span>
+                <span>Since 2016 · KR Puram, Bengaluru · Online Worldwide</span>
               </div>
               <h1>
-                Learn <em>Carnatic Music</em> from an Expert Teacher
+                <em>Carnatic Music</em> Classes in Bengaluru &amp; Online
               </h1>
               <p className="hero-desc">
-                Join over <strong>4,000 students</strong> trained by Bhargavi Bhadri, experienced vocal music teacher offering online and offline classes in Bengaluru. Covering junior and senior portions, group sessions to one-on-one lessons, we nurture every musical journey.
+                Vocal classes for kids and adults with <strong>Bhargavi Bhadri</strong>, teaching since 2016 with <strong>4,000+ students</strong> trained. In-person batches near Hoodi and KR Puram, and live online classes for students in the USA, Dubai, Australia and Europe.
               </p>
               <div className="hero-actions">
-                <a href="tel:+919731891537" className="btn btn-primary" id="hero-call-btn" aria-label="Call to enroll in Carnatic music classes">
+                <a
+                  href={whatsappLink()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-whatsapp"
+                  id="hero-whatsapp-btn"
+                  aria-label="Ask fees and timings on WhatsApp"
+                >
+                  <WhatsAppIcon size={18} color="#ffffff" />
+                  <span>Get Fees &amp; Timings</span>
+                </a>
+                <a href={`tel:${PHONE}`} className="btn btn-secondary" id="hero-call-btn" aria-label="Call to enroll in Carnatic music classes">
                   <Phone size={18} />
                   <span>Call to Enroll</span>
                 </a>
-                <a
-                  href="https://wa.me/919731891537?text=Hi%20Bhargavi%2C%20I%20am%20interested%20in%20Carnatic%20music%20classes."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-secondary"
-                  id="hero-whatsapp-btn"
-                  aria-label="WhatsApp enquiry for music classes"
-                >
-                  <WhatsAppIcon size={18} color="#25D366" />
-                  <span>WhatsApp Enquiry</span>
-                </a>
               </div>
+              <p className="hero-rating">
+                <span className="hero-rating-stars" aria-hidden="true">★★★★★</span>
+                <span>5.0 on Google ·</span>
+                <a href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer" id="hero-reviews-link">Read parent reviews</a>
+              </p>
               <div className="hero-stats">
                 <div className="hero-stat">
                   <div className="hero-stat-num">4,000+</div>
                   <div className="hero-stat-label">Students Trained</div>
                 </div>
                 <div className="hero-stat">
-                  <div className="hero-stat-num">9+</div>
+                  <div className="hero-stat-num">{YEARS_TEACHING}+</div>
                   <div className="hero-stat-label">Years of Experience</div>
                 </div>
                 <div className="hero-stat">
@@ -164,12 +235,12 @@ export default function HomePage() {
             <div className="about-grid">
               <div className="about-img-wrap">
                 <div className="about-img-collage">
-                  <Image src="/gallery/gallery-1.png" alt="Carnatic music class by Bhargavi Bhadri" width={600} height={400} style={{ gridColumn: '1/3', height: '280px', objectFit: 'cover', width: '100%' }} />
-                  <Image src="/gallery/gallery-2.png" alt="Students learning Carnatic music" width={300} height={200} style={{ height: '200px', objectFit: 'cover', width: '100%' }} />
-                  <Image src="/gallery/gallery-3.png" alt="Music class session Bengaluru" width={300} height={200} style={{ height: '200px', objectFit: 'cover', width: '100%' }} />
+                  <Image src={galleryImage(1).src} alt={galleryImage(1).alt} width={600} height={400} style={{ gridColumn: '1/3', height: '280px', objectFit: 'cover', width: '100%' }} />
+                  <Image src={galleryImage(2).src} alt={galleryImage(2).alt} width={300} height={200} style={{ height: '200px', objectFit: 'cover', width: '100%' }} />
+                  <Image src={galleryImage(7).src} alt={galleryImage(7).alt} width={300} height={200} style={{ height: '200px', objectFit: 'cover', width: '100%' }} />
                 </div>
                 <div className="about-tag">
-                  <div className="about-tag-num">9+</div>
+                  <div className="about-tag-num">{YEARS_TEACHING}+</div>
                   <div className="about-tag-txt">Years Teaching</div>
                 </div>
               </div>
@@ -178,10 +249,10 @@ export default function HomePage() {
                 <div className="section-badge">About the Teacher</div>
                 <h2>Bhargavi Bhadri, Dedicated Carnatic Vocal Music Teacher</h2>
                 <p>
-                  With a deep-rooted passion for Indian classical music, Bhargavi Bhadri has been guiding students through the profound world of Carnatic music since April 2016. Based in Bengaluru's Krishnarajapuram, she teaches students of all ages, from beginners discovering music for the first time to seasoned learners deepening their classical foundation.
+                  With a deep-rooted passion for Indian classical music, Bhargavi Bhadri has been guiding students through the profound world of Carnatic music since April 2016. Based in Bengaluru&apos;s Krishnarajapuram, she teaches students of all ages, from beginners discovering music for the first time to seasoned learners deepening their classical foundation.
                 </p>
                 <p>
-                  Her classes go beyond technical training. Every lesson is designed to build cultural connection, musical sensitivity, and lasting love for the art. Whether learning for joyful recreation or preparing for formal examinations, Bhargavi's patient, structured, and encouraging approach makes learning enjoyable and effective.
+                  Her classes go beyond technical training. Every lesson is designed to build cultural connection, musical sensitivity, and lasting love for the art. Whether learning for joyful recreation or preparing for formal examinations, Bhargavi&apos;s patient, structured, and encouraging approach makes learning enjoyable and effective.
                 </p>
                 <div className="about-highlights">
                   <div className="about-highlight">
@@ -209,7 +280,7 @@ export default function HomePage() {
                     <span className="about-highlight-icon"><MapPin size={20} /></span>
                     <div>
                       <h4>Bengaluru-Based</h4>
-                      <p>Kodigehalli, Krishnarajapuram</p>
+                      <p>Kodigehalli Main Rd, KR Puram</p>
                     </div>
                   </div>
                 </div>
@@ -242,6 +313,7 @@ export default function HomePage() {
                   <span className="class-tag">Geethams</span>
                   <span className="class-tag">Foundational Syllabus</span>
                 </div>
+                <Link href="/carnatic-music-classes-for-kids" className="card-link">Classes for kids <ArrowRight size={15} /></Link>
               </article>
 
               <article className="class-card" aria-label="Senior Carnatic Music Class">
@@ -256,6 +328,7 @@ export default function HomePage() {
                   <span className="class-tag">Manodharma Sangeetha</span>
                   <span className="class-tag">Senior Syllabus</span>
                 </div>
+                <Link href="/carnatic-music-exam-preparation" className="card-link">Senior syllabus &amp; exams <ArrowRight size={15} /></Link>
               </article>
 
               <article className="class-card" aria-label="Online Music Classes">
@@ -270,13 +343,14 @@ export default function HomePage() {
                   <span className="class-tag">Video Call</span>
                   <span className="class-tag">All Levels</span>
                 </div>
+                <Link href="/online-carnatic-music-classes" className="card-link">Online classes &amp; time zones <ArrowRight size={15} /></Link>
               </article>
 
               <article className="class-card" aria-label="One-on-One Personal Classes">
                 <span className="class-icon"><UserCheck size={28} /></span>
                 <h3>One-on-One Classes</h3>
                 <p>
-                  Individual instruction tailored to each student's pace, vocal range, and personal goals. One-on-one sessions allow complete attention to nuance, swara clarity, and accelerated musical progress.
+                  Individual instruction tailored to each student&apos;s pace, vocal range, and personal goals. One-on-one sessions allow complete attention to nuance, swara clarity, and accelerated musical progress.
                 </p>
                 <div className="class-tags">
                   <span className="class-tag">Personalized</span>
@@ -302,13 +376,14 @@ export default function HomePage() {
                 <span className="class-icon"><GraduationCap size={28} /></span>
                 <h3>Exam Preparation</h3>
                 <p>
-                  Systematic preparation for recognized music board examinations (Junior and Senior grade certifications). Includes comprehensive theory, practical revision, mock exams, and performance guidance.
+                  Systematic preparation for Junior and Senior grade Carnatic music examinations, including Pracheen Kala Kendra exams. Includes comprehensive theory, practical revision, mock exams, and performance guidance.
                 </p>
                 <div className="class-tags">
                   <span className="class-tag">Board Exams</span>
                   <span className="class-tag">Junior & Senior Grade</span>
                   <span className="class-tag">Theory & Practical</span>
                 </div>
+                <Link href="/carnatic-music-exam-preparation" className="card-link">Exam preparation <ArrowRight size={15} /></Link>
               </article>
             </div>
           </div>
@@ -343,6 +418,7 @@ export default function HomePage() {
                   <p>
                     Sacred devotional compositions in Kannada, Telugu, Tamil, and Sanskrit. These compositions cultivate devotion while strengthening vocal technique, featuring popular bhajans, devaranamas, and keerthanas.
                   </p>
+                  <Link href="/devotional-songs-bhajan-classes" className="card-link">Devotional &amp; bhajan classes <ArrowRight size={15} /></Link>
                 </div>
               </article>
 
@@ -353,6 +429,7 @@ export default function HomePage() {
                   <p>
                     Beloved Kannada lyrical poetry set to soulful melodies. Featuring timeless verses by celebrated poets like D.V. Gundappa, K.S. Narasimhaswamy, Kuvempu, and Bendre, expressing deep emotion and cultural resonance.
                   </p>
+                  <Link href="/bhavageethe-folk-song-classes" className="card-link">Bhavageethe classes <ArrowRight size={15} /></Link>
                 </div>
               </article>
 
@@ -363,6 +440,7 @@ export default function HomePage() {
                   <p>
                     Traditional Karnataka folk songs celebrating nature, harvest, rural life, and cultural festivities. Janapada songs offer rhythmic variety and a strong connection to regional roots.
                   </p>
+                  <Link href="/bhavageethe-folk-song-classes" className="card-link">Folk song classes <ArrowRight size={15} /></Link>
                 </div>
               </article>
 
@@ -373,6 +451,7 @@ export default function HomePage() {
                   <p>
                     Invocatory shlokas, morning prayers, school assembly songs, and patriotic renditions. Ideal for students performing at cultural functions, school events, and auspicious gatherings.
                   </p>
+                  <Link href="/devotional-songs-bhajan-classes" className="card-link">Prayer &amp; shloka classes <ArrowRight size={15} /></Link>
                 </div>
               </article>
 
@@ -396,7 +475,7 @@ export default function HomePage() {
               <div className="section-badge">Global Reach</div>
               <h2>Carnatic Music Connecting the World</h2>
               <p>
-                Bhargavi Bhadri's classes reach far beyond Bengaluru. Students from across continents join online, carrying the rich heritage of Carnatic music worldwide.
+                Bhargavi Bhadri&apos;s classes reach far beyond Bengaluru. Students from across continents join online, carrying the rich heritage of Carnatic music worldwide.
               </p>
             </div>
 
@@ -453,13 +532,20 @@ export default function HomePage() {
                 <span className="reach-stat-label">Countries Reached</span>
               </div>
               <div className="reach-stat">
-                <span className="reach-stat-num">9+</span>
+                <span className="reach-stat-num">{YEARS_TEACHING}+</span>
                 <span className="reach-stat-label">Years of Teaching</span>
               </div>
               <div className="reach-stat">
                 <span className="reach-stat-num">5.0★</span>
                 <span className="reach-stat-label">Google Reviews</span>
               </div>
+            </div>
+
+            <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+              <Link href="/online-carnatic-music-classes" className="btn btn-primary" id="global-online-btn">
+                <span>How Online Classes Work</span>
+                <ArrowRight size={18} />
+              </Link>
             </div>
           </div>
         </section>
@@ -472,7 +558,7 @@ export default function HomePage() {
                 <div className="section-badge">Examinations</div>
                 <h2>Music Certificate Examinations & Formal Training</h2>
                 <p>
-                  Bhargavi Bhadri prepares students for recognized music certificate examinations. Formal certification validates musical progress and opens doors to advanced performance opportunities.
+                  Bhargavi Bhadri prepares students for Junior and Senior grade Carnatic music examinations, including Pracheen Kala Kendra exams. Formal certification validates musical progress and opens doors to advanced performance opportunities.
                 </p>
                 <ul className="cert-list" aria-label="Examination features">
                   <li>Structured preparation for Junior and Senior board examinations</li>
@@ -482,11 +568,15 @@ export default function HomePage() {
                   <li>Guidance on exam board requirements and syllabus rubrics</li>
                   <li>Support for university music auditions and youth festivals</li>
                 </ul>
-                <div style={{ marginTop: '2rem' }}>
-                  <a href="tel:+919731891537" className="btn btn-primary" id="cert-enquire-btn">
-                    <Phone size={18} />
+                <div className="hero-actions" style={{ marginTop: '2rem' }}>
+                  <a href={whatsappLink('Hi Bhargavi, I would like to know about Carnatic music exam preparation.')} target="_blank" rel="noopener noreferrer" className="btn btn-primary" id="cert-enquire-btn">
+                    <WhatsAppIcon size={18} color="#ffffff" />
                     <span>Enquire About Exams</span>
                   </a>
+                  <Link href="/carnatic-music-exam-preparation" className="btn btn-secondary" id="cert-learn-more-btn">
+                    <span>Exam Syllabus</span>
+                    <ArrowRight size={18} />
+                  </Link>
                 </div>
               </div>
 
@@ -522,14 +612,14 @@ export default function HomePage() {
             <div className="section-header">
               <div className="section-badge">Gallery</div>
               <h2>Moments from Our Classes</h2>
-              <p>A glimpse into our vibrant musical journey at Bhargavi Bhadri's music classes.</p>
+              <p>A glimpse into our vibrant musical journey at Bhargavi Bhadri&apos;s music classes.</p>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem', marginBottom: '2.5rem' }}>
-              {galleryPreview.map((n) => (
-                <div key={n} style={{ borderRadius: '0.75rem', overflow: 'hidden', aspectRatio: '1', position: 'relative' }}>
+              {galleryPreview.map((img) => (
+                <div key={img.id} style={{ borderRadius: '0.75rem', overflow: 'hidden', aspectRatio: '1', position: 'relative' }}>
                   <Image
-                    src={`/gallery/gallery-${n}.png`}
-                    alt={`Carnatic music class photo ${n}`}
+                    src={img.src}
+                    alt={img.alt}
                     fill
                     sizes="(max-width: 768px) 50vw, 25vw"
                     style={{ objectFit: 'cover' }}
@@ -546,32 +636,31 @@ export default function HomePage() {
           </div>
         </section>
 
+        <FAQ faqs={HOME_FAQS} intro="Quick answers for parents and adult learners. For anything else, message Bhargavi on WhatsApp." />
+
         {/* ===== CONTACT ===== */}
-        <section className="contact" id="contact" aria-label="Contact information">
+        <section className="contact" id="contact" aria-label="Enquire and contact information">
           <div className="container">
             <div className="section-header">
-              <div className="section-badge">Get In Touch</div>
-              <h2>Enroll or Learn More</h2>
-              <p>Ready to begin your Carnatic music journey? Reach out today, admissions are open for new students.</p>
+              <div className="section-badge">Admissions Open</div>
+              <h2>Enquire About Classes</h2>
+              <p>Share a few details and Bhargavi will reply on WhatsApp with suitable batch timings and fees for in-person or online classes.</p>
             </div>
 
             <div className="contact-grid">
-              <div className="contact-info">
-                <div className="contact-items">
+              <div>
+                <div className="enquiry-card">
+                  <h3 style={{ marginBottom: '1.25rem' }}>Send an enquiry</h3>
+                  <EnquiryForm id="home-enquiry-form" />
+                </div>
+
+                <div className="contact-items" style={{ marginTop: '1.5rem' }}>
                   <div className="contact-item" aria-label="Phone contact">
                     <div className="contact-icon" aria-hidden="true"><Phone size={22} /></div>
                     <div className="contact-item-content">
                       <h4>Phone / WhatsApp</h4>
-                      <a href="tel:+919731891537">+91 97318 91537</a>
+                      <a href={`tel:${PHONE}`} id="contact-call-link">{PHONE_DISPLAY}</a>
                       <p>Call or WhatsApp to enquire and enroll</p>
-                    </div>
-                  </div>
-
-                  <div className="contact-item" aria-label="Address">
-                    <div className="contact-icon" aria-hidden="true"><MapPin size={22} /></div>
-                    <div className="contact-item-content">
-                      <h4>Address</h4>
-                      <p>B002, Mukunda Nandanam B Block,<br />Kodigehalli Main Rd, Ayyappa Nagar,<br />Krishnarajapuram, Bengaluru - 560067</p>
                     </div>
                   </div>
 
@@ -579,16 +668,16 @@ export default function HomePage() {
                     <div className="contact-icon" aria-hidden="true"><Mail size={22} /></div>
                     <div className="contact-item-content">
                       <h4>Email</h4>
-                      <a href="mailto:bhargavianand1974@gmail.com">bhargavianand1974@gmail.com</a>
+                      <a href={`mailto:${EMAIL}`} id="contact-email-link">{EMAIL}</a>
                       <p>Write to us for enquiries and admissions</p>
                     </div>
                   </div>
 
                   <div className="contact-item" aria-label="Facebook page">
-                    <div className="contact-icon" aria-hidden="true"><FacebookIcon size={22} color="#1877F2" /></div>
+                    <div className="contact-icon" aria-hidden="true"><FacebookIcon size={22} color="#ffffff" /></div>
                     <div className="contact-item-content">
                       <h4>Facebook</h4>
-                      <a href="https://www.facebook.com/profile.php?id=61578842536998" target="_blank" rel="noopener noreferrer">
+                      <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer">
                         Visit Facebook Page ↗
                       </a>
                       <p>Follow updates, student performances, and events</p>
@@ -600,40 +689,34 @@ export default function HomePage() {
               <div>
                 <div className="contact-map-area">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.08203128!2d77.6913!3d13.0225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae11f1cdadde75%3A0x6e23d2bf5afe1ce6!2sMukunda%20Nandanam%2C%20Kodigehalli%20Main%20Rd%2C%20Ayyappa%20Nagar%2C%20Krishnarajapuram%2C%20Bengaluru%2C%20Karnataka%20560067!5e0!3m2!1sen!2sin!4v1634567890123"
-                    title="Carnatic Music Classes by Bhargavi Bhadri Location"
+                    src={MAP_EMBED_URL}
+                    title="Carnatic Music Classes by Bhargavi Bhadri on Google Maps"
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    aria-label="Map showing location of Carnatic Music Classes by Bhargavi Bhadri"
                   />
                   <div className="service-areas">
-                    <h4>Service Areas</h4>
+                    <div className="contact-item" style={{ padding: 0, border: 'none', marginBottom: '1.25rem' }} aria-label="Address">
+                      <div className="contact-icon" aria-hidden="true"><MapPin size={22} /></div>
+                      <div className="contact-item-content">
+                        <h4>In-Person Classes</h4>
+                        <p>{ADDRESS_LINES.map((line) => <span key={line}>{line}<br /></span>)}</p>
+                        <a href={DIRECTIONS_URL} target="_blank" rel="noopener noreferrer" id="contact-directions-link" style={{ fontWeight: 600 }}>Get directions ↗</a>
+                      </div>
+                    </div>
+                    <div className="contact-item" style={{ padding: 0, border: 'none', marginBottom: '1.5rem' }} aria-label="Class hours">
+                      <div className="contact-icon" aria-hidden="true"><Clock size={22} /></div>
+                      <div className="contact-item-content">
+                        <h4>Class Hours</h4>
+                        <p>{HOURS.display} (in-person)<br />Online slots arranged to suit your time zone</p>
+                      </div>
+                    </div>
+                    <h4>Students Come From</h4>
                     <div className="service-area-tags">
-                      {['Hoodi', 'Krishnarajapuram', 'Medahalli', 'Kodigehalli', 'Ayyappa Nagar', 'Basavanapura', 'Hale Devasandra', 'White City Layout', 'Online - Worldwide'].map((area) => (
+                      {[...SERVICE_AREAS, 'Online - Worldwide'].map((area) => (
                         <span key={area} className="service-area-tag">{area}</span>
                       ))}
                     </div>
-                  </div>
-                </div>
-
-                <div className="contact-cta-card">
-                  <h3>Enroll in Classes Today</h3>
-                  <p>Admissions open for junior and senior Carnatic portions, devotional music, and Bhavageethe.</p>
-                  <div className="contact-cta-btns">
-                    <a
-                      href="https://wa.me/919731891537?text=Hi%20Bhargavi%2C%20I%20am%20interested%20in%20enrolling%20in%20Carnatic%20music%20classes."
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn btn-whatsapp"
-                      id="contact-whatsapp-btn"
-                    >
-                      <WhatsAppIcon size={18} color="#ffffff" />
-                      <span>Message on WhatsApp</span>
-                    </a>
-                    <a href="tel:+919731891537" className="btn btn-outline" id="contact-call-btn" style={{ borderColor: 'var(--color-amber)', color: 'var(--color-amber)' }}>
-                      <Phone size={18} />
-                      <span>Call +91 97318 91537</span>
-                    </a>
+                    <Link href="/carnatic-music-classes-kr-puram" className="card-link">In-person classes near KR Puram, Hoodi &amp; Whitefield <ArrowRight size={15} /></Link>
                   </div>
                 </div>
               </div>

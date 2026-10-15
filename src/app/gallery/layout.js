@@ -1,14 +1,11 @@
-export const metadata = {
-  title: 'Gallery | Carnatic Music Classes by Bhargavi Bhadri',
+import { pageMetadata } from '@/lib/site';
+
+export const metadata = pageMetadata({
+  title: 'Photo Gallery of Carnatic Music Classes',
   description:
-    'Photo gallery of Carnatic music classes, student performances, and events by Bhargavi Bhadri in Bengaluru. Browse our vibrant music learning community.',
-  openGraph: {
-    title: 'Gallery | Carnatic Music Classes by Bhargavi Bhadri',
-    description:
-      'Photos from Carnatic music classes and student performances in Bengaluru.',
-    images: ['/gallery/gallery-1.png'],
-  },
-};
+    'Photos of Carnatic music classes, stage performances and exam results from Bhargavi Bhadri\'s classes in KR Puram, Bengaluru and online.',
+  path: '/gallery',
+});
 
 export default function GalleryLayout({ children }) {
   return children;

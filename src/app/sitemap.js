@@ -1,17 +1,28 @@
+import { SITE_URL, PROGRAMS } from '@/lib/site';
+import { GALLERY_IMAGES } from '@/lib/gallery';
+
 export default function sitemap() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://bhargavicarnatic.vercel.app';
+  const lastModified = new Date();
   return [
     {
-      url: baseUrl,
-      lastModified: new Date(),
+      url: `${SITE_URL}/`,
+      lastModified,
       changeFrequency: 'monthly',
       priority: 1,
+      images: [`${SITE_URL}/og-image.jpg`],
     },
+    ...PROGRAMS.map((p) => ({
+      url: `${SITE_URL}/${p.slug}`,
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    })),
     {
-      url: `${baseUrl}/gallery`,
-      lastModified: new Date(),
+      url: `${SITE_URL}/gallery`,
+      lastModified,
       changeFrequency: 'weekly',
-      priority: 0.8,
+      priority: 0.6,
+      images: GALLERY_IMAGES.map((img) => `${SITE_URL}${img.src}`),
     },
   ];
 }

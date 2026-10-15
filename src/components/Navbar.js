@@ -30,10 +30,10 @@ export default function Navbar() {
           <ul className="navbar-links" role="list">
             <li><Link href="/#about">About</Link></li>
             <li><Link href="/#classes">Classes</Link></li>
-            <li><Link href="/#music-types">Music</Link></li>
-            <li><Link href="/#global-reach">Global</Link></li>
+            <li><Link href="/carnatic-music-classes-for-kids">For Kids</Link></li>
+            <li><Link href="/online-carnatic-music-classes">Online</Link></li>
             <li><Link href="/gallery">Gallery</Link></li>
-            <li><Link href="/#contact" className="navbar-cta">Contact Us</Link></li>
+            <li><Link href="/#contact" className="navbar-cta">Enquire Now</Link></li>
           </ul>
 
           <button
@@ -52,11 +52,12 @@ export default function Navbar() {
 
       <div className={`mobile-menu${menuOpen ? ' open' : ''}`} role="dialog" aria-label="Mobile navigation">
         <Link href="/#about" onClick={closeMenu}>About</Link>
-        <Link href="/#classes" onClick={closeMenu}>Classes</Link>
-        <Link href="/#music-types" onClick={closeMenu}>Music</Link>
-        <Link href="/#global-reach" onClick={closeMenu}>Global Reach</Link>
+        <Link href="/#classes" onClick={closeMenu}>All Classes</Link>
+        <Link href="/carnatic-music-classes-for-kids" onClick={closeMenu}>Classes for Kids</Link>
+        <Link href="/online-carnatic-music-classes" onClick={closeMenu}>Online Classes</Link>
+        <Link href="/carnatic-music-classes-kr-puram" onClick={closeMenu}>KR Puram &amp; Whitefield</Link>
         <Link href="/gallery" onClick={closeMenu}>Gallery</Link>
-        <Link href="/#contact" onClick={closeMenu} style={{ color: 'var(--color-amber)' }}>Contact Us</Link>
+        <Link href="/#contact" onClick={closeMenu} style={{ color: 'var(--color-amber)' }}>Enquire Now</Link>
       </div>
     </>
   );

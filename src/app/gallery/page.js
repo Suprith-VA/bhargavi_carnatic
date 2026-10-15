@@ -5,14 +5,9 @@ import Link from 'next/link';
 import { Phone } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-
-// Static local gallery images (always shown)
-const staticImages = Array.from({ length: 23 }, (_, i) => ({
-  id: `local-${i + 1}`,
-  src: `/gallery/gallery-${i + 1}.png`,
-  alt: `Carnatic music class photo ${i + 1}, Bhargavi Bhadri`,
-  isLocal: true,
-}));
+import { WhatsAppIcon } from '@/components/Icons';
+import { GALLERY_IMAGES as staticImages } from '@/lib/gallery';
+import { PHONE, whatsappLink } from '@/lib/site';
 
 export default function GalleryPage() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -76,7 +71,7 @@ export default function GalleryPage() {
         >
           <div className="section-badge">Photo Gallery</div>
           <h1 style={{ marginTop: '1rem', marginBottom: '1rem' }}>
-            Life at Bhargavi Bhadri's Music Classes
+            Life at Bhargavi Bhadri&apos;s Carnatic Music Classes
           </h1>
           <p style={{ maxWidth: '580px', margin: '0 auto 2rem', fontSize: '1.05rem', color: 'var(--color-text-muted)' }}>
             Moments of learning, joy, and celebration from our Carnatic music classes in Bengaluru and online sessions with students worldwide.
@@ -140,10 +135,16 @@ export default function GalleryPage() {
           <p style={{ color: 'rgba(255,255,255,0.85)', marginBottom: '2rem', maxWidth: '500px', margin: '0 auto 2rem' }}>
             Join our growing community of music lovers, enroll today and start your Carnatic journey.
           </p>
-          <a href="tel:+919731891537" className="btn" style={{ background: 'var(--color-white)', color: 'var(--color-amber-dark)', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }} id="gallery-cta-call-btn">
-            <Phone size={16} />
-            <span>Call to Enroll</span>
-          </a>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp" id="gallery-cta-whatsapp-btn">
+              <WhatsAppIcon size={16} color="#ffffff" />
+              <span>Ask Fees &amp; Timings</span>
+            </a>
+            <a href={`tel:${PHONE}`} className="btn" style={{ background: 'var(--color-white)', color: 'var(--color-amber-dark)', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }} id="gallery-cta-call-btn">
+              <Phone size={16} />
+              <span>Call to Enroll</span>
+            </a>
+          </div>
         </section>
       </main>
 
