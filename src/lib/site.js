@@ -33,7 +33,14 @@ export const ADDRESS_LINES = [
 // Pin position of the Google Business Profile listing (plus code 2P4H+765)
 export const GEO = { lat: 13.0056392, lng: 77.728725 };
 
-export const HOURS = { days: 'Monday to Friday', opens: '15:00', closes: '20:30', display: 'Mon–Fri, 3:00 PM – 8:30 PM' };
+export const HOURS = {
+  days: 'Monday to Saturday',
+  dayList: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+  opens: '10:00',
+  closes: '20:30',
+  time: '10:00 AM to 8:30 PM',
+  display: 'Mon–Sat, 10:00 AM – 8:30 PM',
+};
 
 // Google Business Profile: Mukunda Nandanam listing
 const PLACE_ID = 'ChIJBdznj6ERrjsRGi43X6PDOdk';

@@ -37,7 +37,7 @@ const FAQS = [
   },
   {
     q: 'When are the in-person classes for kids?',
-    a: `In-person batches run ${HOURS.days} between 3:00 PM and 8:30 PM, after school hours, at Kodigehalli Main Road, Ayyappa Nagar, KR Puram. Message on WhatsApp for the batch that suits your child's age and school timings.`,
+    a: `In-person batches run ${HOURS.days}, ${HOURS.time}, with after-school and Saturday slots, at Kodigehalli Main Road, Ayyappa Nagar, KR Puram. Message on WhatsApp for the batch that suits your child's age and school timings.`,
   },
   {
     q: 'Can my child learn online?',

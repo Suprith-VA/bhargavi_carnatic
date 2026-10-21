@@ -49,7 +49,7 @@ export function businessSchema() {
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        dayOfWeek: HOURS.dayList,
         opens: HOURS.opens,
         closes: HOURS.closes,
       },

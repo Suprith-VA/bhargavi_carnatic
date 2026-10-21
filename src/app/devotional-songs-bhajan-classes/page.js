@@ -110,7 +110,7 @@ export default function DevotionalClassesPage() {
             <div className="info-cards">
               <div className="info-card">
                 <h3>In Person</h3>
-                <p>Weekday afternoon and evening classes on Kodigehalli Main Road, KR Puram. <Link href="/carnatic-music-classes-kr-puram">Location &amp; timings</Link>.</p>
+                <p>Classes Monday to Saturday, 10:00 AM to 8:30 PM, on Kodigehalli Main Road, KR Puram. <Link href="/carnatic-music-classes-kr-puram">Location &amp; timings</Link>.</p>
               </div>
               <div className="info-card">
                 <h3>Online</h3>

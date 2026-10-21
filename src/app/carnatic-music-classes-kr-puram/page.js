@@ -22,7 +22,7 @@ import {
 
 const PATH = '/carnatic-music-classes-kr-puram';
 const DESCRIPTION =
-  'In-person Carnatic music classes on Kodigehalli Main Road, Ayyappa Nagar, KR Puram, Bengaluru, close to TC Palya, Hoodi, Medahalli, Whitefield, Kadugodi and Mahadevapura. Kids & adults, group & one-on-one, weekday evenings.';
+  'In-person Carnatic music classes on Kodigehalli Main Road, Ayyappa Nagar, KR Puram, Bengaluru, close to TC Palya, Hoodi, Medahalli, Whitefield, Kadugodi and Mahadevapura. Kids & adults, group & one-on-one, Monday to Saturday.';
 const WHATSAPP_MESSAGE = 'Hi Bhargavi, I am looking for in-person Carnatic music classes near KR Puram / Hoodi. Please share the batch timings and fees.';
 
 export const metadata = pageMetadata({
@@ -39,7 +39,7 @@ const FAQS = [
   },
   {
     q: 'What are the class timings?',
-    a: `In-person classes run ${HOURS.days}, 3:00 PM to 8:30 PM, which fits after school and after work. Batches are grouped by age and level; message on WhatsApp for current openings.`,
+    a: `In-person classes run ${HOURS.days}, ${HOURS.time}, so there are slots for school children, working adults and homemakers. Batches are grouped by age and level; message on WhatsApp for current openings.`,
   },
   {
     q: 'Which areas do students come from?',
@@ -47,7 +47,7 @@ const FAQS = [
   },
   {
     q: 'I live in Whitefield or Mahadevapura. Is there an option without travelling?',
-    a: 'Yes. If travel on weekday evenings is difficult, you can take live online classes with the same teacher and syllabus, and switch to in-person classes whenever it suits you.',
+    a: 'Yes. If travelling for class is difficult, you can take live online classes with the same teacher and syllabus, and switch to in-person classes whenever it suits you.',
   },
   {
     q: 'Do you teach adults in person?',
@@ -103,7 +103,7 @@ export default function LocalClassesPage() {
                   </li>
                 </ul>
                 <p>
-                  Weekday afternoon and evening batches mean children can come straight after school, and working adults can join after office hours.
+                  Classes run from morning to evening, Monday to Saturday: children can come after school or on Saturdays, and adults can choose a morning, evening or Saturday slot.
                 </p>
               </div>
               <div>

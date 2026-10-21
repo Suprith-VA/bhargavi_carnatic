@@ -65,7 +65,7 @@ const HOME_FAQS = [
   },
   {
     q: 'Where are the in-person classes held?',
-    a: `In-person classes are held at Mukunda Nandanam, Kodigehalli Main Road, Ayyappa Nagar, Krishnarajapuram (KR Puram), Bengaluru 560067, close to Hoodi, Medahalli and Whitefield. Classes run ${HOURS.days}, 3:00 PM to 8:30 PM.`,
+    a: `In-person classes are held at Mukunda Nandanam, Kodigehalli Main Road, Ayyappa Nagar, Krishnarajapuram (KR Puram), Bengaluru 560067, close to Hoodi, Medahalli and Whitefield. Classes run ${HOURS.days}, ${HOURS.time}.`,
   },
   {
     q: 'Do you offer online Carnatic music classes for students outside India?',
