@@ -1145,7 +1145,7 @@ section {
   font-weight: 700;
   color: var(--color-cream);
 }
-.footer-brand > p { font-size: 0.88rem; line-height: 1.7; margin-bottom: 1.5rem; }
+.footer-brand > p { font-size: 0.88rem; line-height: 1.7; margin-bottom: 1.5rem; color: rgba(250, 243, 234, 0.65); }
 .footer-phone {
   display: inline-flex;
   align-items: center;

@@ -79,7 +79,7 @@ export const PROGRAMS = [
   },
   {
     slug: 'carnatic-music-classes-kr-puram',
-    name: 'Classes in KR Puram, Hoodi & Whitefield',
+    name: 'Classes in KR Puram, Ayyappa Nagar & Hoodi',
     blurb: 'In-person batches on Kodigehalli Main Road, Ayyappa Nagar.',
   },
   {

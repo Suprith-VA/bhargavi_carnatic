@@ -33,6 +33,9 @@ export default function Footer() {
             <p>
               Carnatic vocal music classes since April 2016, in person in KR Puram, Bengaluru and online for students across India and around the world.
             </p>
+            <p lang="kn" style={{ fontSize: '0.85rem', marginTop: '-0.75rem' }}>
+              ಭಾರ್ಗವಿ ಭದ್ರಿ · ಕರ್ನಾಟಕ ಸಂಗೀತ ತರಗತಿಗಳು, ಕೆ.ಆರ್. ಪುರಂ, ಬೆಂಗಳೂರು
+            </p>
             <div className="footer-contact-links" style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginTop: '1rem' }}>
               <a href={`tel:${PHONE}`} className="footer-phone" id="footer-call" aria-label="Call Bhargavi Bhadri" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
                 <Phone size={15} />

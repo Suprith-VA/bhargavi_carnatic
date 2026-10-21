@@ -88,6 +88,7 @@ export function teacherSchema() {
     '@type': 'Person',
     '@id': TEACHER_ID,
     name: TEACHER_NAME,
+    alternateName: 'ಭಾರ್ಗವಿ ಭದ್ರಿ',
     jobTitle: 'Carnatic Vocal Music Teacher',
     url: `${SITE_URL}/#about`,
     image: `${SITE_URL}/logo.png`,

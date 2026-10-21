@@ -26,9 +26,10 @@ const DESCRIPTION =
 const WHATSAPP_MESSAGE = 'Hi Bhargavi, I am looking for in-person Carnatic music classes near KR Puram / Hoodi. Please share the batch timings and fees.';
 
 export const metadata = pageMetadata({
-  title: 'Carnatic Music Classes in KR Puram & Hoodi',
+  title: 'Carnatic Music Classes in KR Puram, Ayyappa Nagar & Hoodi',
   description: DESCRIPTION,
   path: PATH,
+  absoluteTitle: true,
 });
 
 const FAQS = [
@@ -61,9 +62,9 @@ export default function LocalClassesPage() {
       <Navbar />
       <main>
         <PageHero
-          breadcrumb={[{ name: 'Classes in KR Puram, Hoodi & Whitefield', path: PATH }]}
+          breadcrumb={[{ name: 'Classes in KR Puram & Ayyappa Nagar', path: PATH }]}
           eyebrow="In-Person Classes · East Bengaluru"
-          title={<><em>Carnatic Music</em> Classes in KR Puram, Hoodi &amp; Whitefield</>}
+          title={<><em>Music Classes</em> in Ayyappa Nagar, KR Puram, Hoodi &amp; TC Palya</>}
           lead="In-person Carnatic vocal classes for children and adults on Kodigehalli Main Road, Ayyappa Nagar, Krishnarajapuram, a short drive from TC Palya, Hoodi, Medahalli, Whitefield, Kadugodi and Mahadevapura. Taught by Bhargavi Bhadri since 2016."
           image={galleryImage(7).src}
           imageAlt={galleryImage(7).alt}

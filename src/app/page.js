@@ -49,12 +49,16 @@ import {
 export const metadata = pageMetadata({
   title: 'Carnatic Music Classes in Bengaluru & Online | Bhargavi Bhadri',
   description:
-    'Carnatic vocal classes for kids & adults with Bhargavi Bhadri. In-person batches near Hoodi, KR Puram & Whitefield, Bengaluru, plus live online classes for the USA, UAE, Australia & Europe. 4,000+ students since 2016.',
+    'Carnatic vocal music (sangeetha) classes for kids & adults with Bhargavi Bhadri in Ayyappa Nagar, KR Puram, near Hoodi, TC Palya & Whitefield, Bengaluru. Live online classes worldwide. 4,000+ students since 2016.',
   path: '/',
   absoluteTitle: true,
 });
 
 const HOME_FAQS = [
+  {
+    q: 'Are these vocal (singing) music classes?',
+    a: 'Yes. Bhargavi Bhadri teaches vocal music, also called sangeetha or singing classes: Carnatic classical vocal, devotional songs and bhajans, Bhavageethe, Kannada folk songs and prayer songs, for children and adults.',
+  },
   {
     q: 'What age can my child start learning Carnatic music?',
     a: 'Many children start around 5 or 6 years old, once they can sit through a short class and repeat a simple tune. Older children, teenagers and adults can start at any age. Send the student\'s age on WhatsApp and Bhargavi will suggest the right batch.',
@@ -104,7 +108,7 @@ export default function HomePage() {
             <div className="hero-content">
               <div className="hero-eyebrow">
                 <div className="hero-eyebrow-line" />
-                <span>Since 2016 · KR Puram, Bengaluru · Online Worldwide</span>
+                <span>Since 2016 · Ayyappa Nagar, KR Puram · Online Worldwide</span>
               </div>
               <h1>
                 <em>Carnatic Music</em> Classes in Bengaluru &amp; Online
